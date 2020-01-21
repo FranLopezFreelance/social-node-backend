@@ -1,10 +1,6 @@
 const db = {
-    users: [
-        {id: '1', name: 'Francisco'},
-        {id: '2', name: 'Pepe'},
-        {id: '3', name: 'Alicia'},
-        {id: '4', name: 'Valeria'}
-    ]
+    users: [],
+    auth: []
 };
 
 async function list(table){
@@ -13,18 +9,25 @@ async function list(table){
 
 async function get(table, id){
     let collection = await list(table);
-    console.log(collection)
     return collection.filter(item => item.id === id)[0] || null; 
 }
 
 async function upsert(table, data){
     db[table].push(data);
+    return data;
 }
 
 function remove(table, id){
     return true;
 }
 
+async function query(table, q){
+    let collection = await list(table);
+    let keys = Object.keys(q);
+    let key = keys[0];
+    return collection.filter(item => item[key] === q[key])[0] || null; 
+}
+
 module.exports = {
-    list, get, upsert, remove
+    list, get, upsert, remove, query
 }

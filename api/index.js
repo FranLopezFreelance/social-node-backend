@@ -11,10 +11,12 @@ const swaggerDocs = require('./swagger.json');
 app.use(bodyParser.json());
 
 // NETWORKS
-const user = require('./components/user/network');
+const userNetwork = require('./components/user/user-network');
+const authNetwork = require('./components/auth/auth-network');
 
 // ROUTES
-app.use('/api/user', user);
+app.use('/api/user', userNetwork);
+app.use('/api/auth', authNetwork);
 app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
 // Serve
